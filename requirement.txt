@@ -1,3 +1,10 @@
 google-generativeai
 speechrecognition
 pyttsx3
+langchain_groq
+shutil
+fastapi
+uuid
+tempfile
+av
+streamlit
