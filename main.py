@@ -2,13 +2,13 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
 import uvicorn
 import os
+import shutil
 import uuid
 from dotenv import load_dotenv
 from groq import Groq
 from langchain_groq import ChatGroq
 from helpers.stt import transcribe_audio
 from helpers.tts import google_tts_play
-from fastapi.concurrency import run_in_threadpool
 
 
 load_dotenv()
@@ -27,10 +27,11 @@ def receive_audio(file: UploadFile = File(...)):
     os.makedirs("audio_chunks", exist_ok=True)
     file_path = os.path.join("audio_chunks", f"chunk_{uuid.uuid4().hex}.wav")
     with open(file_path, "wb") as f:
-        f.write(file.read())
+        shutil.copyfileobj(file.file, f)
 
-    # Speech-to-text (blocking → run in threadpool)
-    text = transcribe_audio, client, file_path
+
+    # Speech-to-text 
+    text = transcribe_audio(client, file_path)
 
     # LLM response
     response =llm.invoke(text)
