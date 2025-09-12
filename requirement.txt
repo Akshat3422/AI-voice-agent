@@ -14,5 +14,6 @@ simpleaudio
 pydub
 gtts
 uvicorn
+websockets
 
 
