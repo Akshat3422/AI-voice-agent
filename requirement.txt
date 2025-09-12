@@ -13,5 +13,6 @@ dotenv
 simpleaudio
 pydub
 gtts
+uvicorn
 
 
